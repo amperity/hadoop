@@ -118,7 +118,7 @@ public final class AdlConfKeys {
         new DeprecationDelta("adl.dfs.enable.client.latency.tracker",
             LATENCY_TRACKER_KEY)
     });
-    Configuration.reloadExistingConfigurations();
+    // Configuration.reloadExistingConfigurations();
   }
 
   private AdlConfKeys() {

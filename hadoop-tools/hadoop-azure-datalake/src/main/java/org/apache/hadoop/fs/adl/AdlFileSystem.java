@@ -243,8 +243,8 @@ public class AdlFileSystem extends FileSystem {
 
   private AccessTokenProvider getAccessTokenProvider(Configuration config)
       throws IOException {
-    Configuration conf = ProviderUtils.excludeIncompatibleCredentialProviders(
-        config, AdlFileSystem.class);
+    Configuration conf = config; /*ProviderUtils.excludeIncompatibleCredentialProviders(
+        config, AdlFileSystem.class);*/
     TokenProviderType type = conf.getEnum(
         AdlConfKeys.AZURE_AD_TOKEN_PROVIDER_TYPE_KEY,
         AdlConfKeys.AZURE_AD_TOKEN_PROVIDER_TYPE_DEFAULT);

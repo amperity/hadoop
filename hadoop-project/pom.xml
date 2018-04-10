@@ -1596,7 +1596,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
-          <execution>
+            <!--
+            <execution>
             <id>depcheck</id>
             <configuration>
               <rules>
@@ -1613,7 +1614,6 @@
                     <exclude>org.ow2.asm:asm</exclude>
                   </excludes>
                   <includes>
-                    <!-- for JDK 8 support -->
                     <include>cglib:cglib:3.2.0</include>
                     <include>com.google.inject:guice:4.0</include>
                     <include>com.sun.jersey:jersey-core:1.19</include>
@@ -1636,6 +1636,7 @@
             </goals>
             <phase>verify</phase>
           </execution>
+          -->
         </executions>
       </plugin>
     </plugins>
