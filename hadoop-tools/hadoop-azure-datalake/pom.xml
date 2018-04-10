@@ -22,6 +22,9 @@
     <version>3.0.1</version>
     <relativePath>../../hadoop-project</relativePath>
   </parent>
+
+  <groupId>amperity</groupId>
+  <version>3.0.1</version>
   <artifactId>hadoop-azure-datalake</artifactId>
   <name>Apache Hadoop Azure Data Lake support</name>
   <description>
