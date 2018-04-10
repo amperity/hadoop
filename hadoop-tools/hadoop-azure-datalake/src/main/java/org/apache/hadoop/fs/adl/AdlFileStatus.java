@@ -33,26 +33,25 @@ class AdlFileStatus extends FileStatus {
 
   private static final long serialVersionUID = 0x01fcbe5e;
 
-  /*private boolean hasAcl = false;*/
+  private boolean hasAcl = false;
 
-  AdlFileStatus(DirectoryEntry entry, Path path/*, boolean hasAcl*/) {
-    this(entry, path, entry.user, entry.group/*, hasAcl*/);
+  AdlFileStatus(DirectoryEntry entry, Path path, boolean hasAcl) {
+    this(entry, path, entry.user, entry.group, hasAcl);
   }
 
   AdlFileStatus(DirectoryEntry entry, Path path,
-                String owner, String group/*, boolean hasAcl*/) {
+                String owner, String group, boolean hasAcl) {
     super(entry.length, DirectoryEntryType.DIRECTORY == entry.type,
         ADL_REPLICATION_FACTOR, ADL_BLOCK_SIZE,
         entry.lastModifiedTime.getTime(), entry.lastAccessTime.getTime(),
         new AdlPermission(false, Short.parseShort(entry.permission, 8)),
         owner, group, null, path);
-    //this.hasAcl = hasAcl;
+    this.hasAcl = hasAcl;
   }
 
-  /*@Override
   public boolean hasAcl() {
     return hasAcl;
-  }*/
+  }
 
   @Override
   public boolean equals(Object o) {
