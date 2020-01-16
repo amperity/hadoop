@@ -750,7 +750,8 @@ final class S3ADataBlocks {
           Preconditions.checkArgument(b != null, "Null buffer");
           if (b.length - offset < length) {
             throw new IndexOutOfBoundsException(
-                FSExceptionMessages.TOO_MANY_BYTES_FOR_DEST_BUFFER
+                // FSExceptionMessages.TOO_MANY_BYTES_FOR_DEST_BUFFER
+                "Requested more bytes than destination buffer size"
                     + ": request length =" + length
                     + ", with offset =" + offset
                     + "; buffer capacity =" + (b.length - offset));

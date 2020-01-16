@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 import java.io.EOFException;
 import java.io.IOException;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+// import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.apache.hadoop.fs.s3a.S3AUtils.*;
 
 /**
@@ -111,8 +111,10 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
       S3AInstrumentation instrumentation,
       long readahead,
       S3AInputPolicy inputPolicy) {
-    Preconditions.checkArgument(isNotEmpty(s3Attributes.getBucket()), "No Bucket");
-    Preconditions.checkArgument(isNotEmpty(s3Attributes.getKey()), "No Key");
+    // Preconditions.checkArgument(isNotEmpty(s3Attributes.getBucket()), "No Bucket");
+    // Preconditions.checkArgument(isNotEmpty(s3Attributes.getKey()), "No Key");
+    Preconditions.checkArgument(s3Attributes.getBucket() != null, "No Bucket");
+    Preconditions.checkArgument(s3Attributes.getKey() != null, "No Key");
     Preconditions.checkArgument(contentLength >= 0, "Negative content length");
     this.bucket = s3Attributes.getBucket();
     this.key = s3Attributes.getKey();
@@ -365,6 +367,35 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
     LOG.debug("While trying to read from stream {}", uri, ioe);
     streamStatistics.readException();
     reopen("failure recovery", pos, length);
+  }
+
+  // NOTE(bmv, 2020-01-16): inlined from superclass, added in Hadoop 3 or later
+  /**
+   * Validation code, available for use in subclasses.
+   * @param position position: if negative an EOF exception is raised
+   * @param buffer destination buffer
+   * @param offset offset within the buffer
+   * @param length length of bytes to read
+   * @throws EOFException if the position is negative
+   * @throws IndexOutOfBoundsException if there isn't space for the amount of
+   * data requested.
+   * @throws IllegalArgumentException other arguments are invalid.
+   */
+  protected void validatePositionedReadArgs(long position,
+      byte[] buffer, int offset, int length) throws EOFException {
+    Preconditions.checkArgument(length >= 0, "length is negative");
+    if (position < 0) {
+      throw new EOFException("position is negative");
+    }
+    Preconditions.checkArgument(buffer != null, "Null buffer");
+    if (buffer.length - offset < length) {
+      throw new IndexOutOfBoundsException(
+          // FSExceptionMessages.TOO_MANY_BYTES_FOR_DEST_BUFFER
+          "Requested more bytes than destination buffer size"
+              + ": request length=" + length
+              + ", with offset ="+ offset
+              + "; buffer capacity =" + (buffer.length - offset));
+    }
   }
 
   /**
@@ -645,7 +676,7 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
         while (nread < length) {
           int nbytes = read(buffer, offset + nread, length - nread);
           if (nbytes < 0) {
-            throw new EOFException(FSExceptionMessages.EOF_IN_READ_FULLY);
+            throw new EOFException("End of file reached before reading fully.");
           }
           nread += nbytes;
         }

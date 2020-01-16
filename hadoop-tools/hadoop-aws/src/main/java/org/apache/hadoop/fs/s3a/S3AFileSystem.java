@@ -297,13 +297,13 @@ public class S3AFileSystem extends FileSystem {
               " queue limit={}",
           blockOutputBuffer, partSize, blockOutputActiveBlocks);
 
-      metadataStore = S3Guard.getMetadataStore(this);
-      allowAuthoritative = conf.getBoolean(METADATASTORE_AUTHORITATIVE,
-          DEFAULT_METADATASTORE_AUTHORITATIVE);
-      if (hasMetadataStore()) {
-        LOG.debug("Using metadata store {}, authoritative={}",
-            getMetadataStore(), allowAuthoritative);
-      }
+      // metadataStore = S3Guard.getMetadataStore(this);
+      // allowAuthoritative = conf.getBoolean(METADATASTORE_AUTHORITATIVE,
+      //     DEFAULT_METADATASTORE_AUTHORITATIVE);
+      // if (hasMetadataStore()) {
+      //   LOG.debug("Using metadata store {}, authoritative={}",
+      //       getMetadataStore(), allowAuthoritative);
+      // }
     } catch (AmazonClientException e) {
       throw translateException("initializing ", new Path(name), e);
     }
@@ -832,10 +832,10 @@ public class S3AFileSystem extends FileSystem {
     // If we have a MetadataStore, track deletions/creations.
     Collection<Path> srcPaths = null;
     List<PathMetadata> dstMetas = null;
-    if (hasMetadataStore()) {
-      srcPaths = new HashSet<>(); // srcPaths need fast look up before put
-      dstMetas = new ArrayList<>();
-    }
+    // if (hasMetadataStore()) {
+    //   srcPaths = new HashSet<>(); // srcPaths need fast look up before put
+    //   dstMetas = new ArrayList<>();
+    // }
     // TODO S3Guard HADOOP-13761: retries when source paths are not visible yet
     // TODO S3Guard: performance: mark destination dirs as authoritative
 
@@ -963,7 +963,8 @@ public class S3AFileSystem extends FileSystem {
    * @return true iff the FS has been instantiated with a metadata store
    */
   public boolean hasMetadataStore() {
-    return !S3Guard.isNullMetadataStore(metadataStore);
+    // return !S3Guard.isNullMetadataStore(metadataStore);
+    return false;
   }
 
   /**
