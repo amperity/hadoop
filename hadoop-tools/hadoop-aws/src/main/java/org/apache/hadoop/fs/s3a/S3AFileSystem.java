@@ -299,13 +299,13 @@ public class S3AFileSystem extends FileSystem {
               " queue limit={}",
           blockOutputBuffer, partSize, blockOutputActiveBlocks);
 
-      // metadataStore = S3Guard.getMetadataStore(this);
-      // allowAuthoritative = conf.getBoolean(METADATASTORE_AUTHORITATIVE,
-      //     DEFAULT_METADATASTORE_AUTHORITATIVE);
-      // if (hasMetadataStore()) {
-      //   LOG.debug("Using metadata store {}, authoritative={}",
-      //       getMetadataStore(), allowAuthoritative);
-      // }
+      metadataStore = S3Guard.getMetadataStore(this);
+      allowAuthoritative = conf.getBoolean(METADATASTORE_AUTHORITATIVE,
+          DEFAULT_METADATASTORE_AUTHORITATIVE);
+      if (hasMetadataStore()) {
+        LOG.debug("Using metadata store {}, authoritative={}",
+            getMetadataStore(), allowAuthoritative);
+      }
     } catch (AmazonClientException e) {
       throw translateException("initializing ", new Path(name), e);
     }
