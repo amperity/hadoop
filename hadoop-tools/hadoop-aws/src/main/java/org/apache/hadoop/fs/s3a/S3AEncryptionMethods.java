@@ -55,7 +55,7 @@ public enum S3AEncryptionMethods {
    */
   public static S3AEncryptionMethods getMethod(String name) throws IOException {
     // if(StringUtils.isBlank(name)) {
-    if (name.equals("")) {
+    if (name == null) {
       return NONE;
     }
     switch(name) {
