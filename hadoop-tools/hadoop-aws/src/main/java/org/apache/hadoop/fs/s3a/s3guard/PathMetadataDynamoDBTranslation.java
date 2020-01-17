@@ -33,7 +33,7 @@ import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 
-import org.apache.commons.lang3.StringUtils;
+// import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.fs.FileStatus;
@@ -252,7 +252,7 @@ final class PathMetadataDynamoDBTranslation {
     Preconditions.checkArgument(path.isUriPathAbsolute(), "Path not absolute");
     URI uri = path.toUri();
     String bucket = uri.getHost();
-    Preconditions.checkArgument(!StringUtils.isEmpty(bucket),
+    Preconditions.checkArgument(bucket != null && !bucket.equals(""),
         "Path missing bucket");
     String pKey = "/" + bucket + uri.getPath();
 

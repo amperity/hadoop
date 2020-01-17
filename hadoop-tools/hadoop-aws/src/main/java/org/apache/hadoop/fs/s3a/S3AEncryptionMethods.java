@@ -20,7 +20,7 @@ package org.apache.hadoop.fs.s3a;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
+// import org.apache.commons.lang3.StringUtils;
 
 /**
  * This enum is to centralize the encryption methods and
@@ -54,7 +54,8 @@ public enum S3AEncryptionMethods {
    * @throws IOException if the algorithm is unknown
    */
   public static S3AEncryptionMethods getMethod(String name) throws IOException {
-    if(StringUtils.isBlank(name)) {
+    // if(StringUtils.isBlank(name)) {
+    if (name.equals("")) {
       return NONE;
     }
     switch(name) {

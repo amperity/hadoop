@@ -84,7 +84,7 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileAlreadyExistsException;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.GlobalStorageStatistics;
+// import org.apache.hadoop.fs.GlobalStorageStatistics;
 import org.apache.hadoop.fs.InvalidRequestException;
 import org.apache.hadoop.fs.LocalDirAllocator;
 import org.apache.hadoop.fs.LocalFileSystem;
@@ -94,7 +94,7 @@ import org.apache.hadoop.fs.PathFilter;
 import org.apache.hadoop.fs.PathIOException;
 import org.apache.hadoop.fs.PathIsNotEmptyDirectoryException;
 import org.apache.hadoop.fs.RemoteIterator;
-import org.apache.hadoop.fs.StorageStatistics;
+// import org.apache.hadoop.fs.StorageStatistics;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.fs.s3a.s3guard.DirListingMetadata;
 import org.apache.hadoop.fs.s3a.s3guard.MetadataStoreListFilesIterator;
@@ -170,22 +170,22 @@ public class S3AFileSystem extends FileSystem {
   private int blockOutputActiveBlocks;
   private boolean useListV1;
 
-  /** Add any deprecated keys. */
-  @SuppressWarnings("deprecation")
-  private static void addDeprecatedKeys() {
-    Configuration.addDeprecations(
-        new Configuration.DeprecationDelta[]{
-            // never shipped in an ASF release, but did get into the wild.
-            new Configuration.DeprecationDelta(
-                OLD_S3A_SERVER_SIDE_ENCRYPTION_KEY,
-                SERVER_SIDE_ENCRYPTION_KEY)
-        });
-    Configuration.reloadExistingConfigurations();
-  }
+  // /** Add any deprecated keys. */
+  // @SuppressWarnings("deprecation")
+  // private static void addDeprecatedKeys() {
+  //   Configuration.addDeprecations(
+  //       new Configuration.DeprecationDelta[]{
+  //           // never shipped in an ASF release, but did get into the wild.
+  //           new Configuration.DeprecationDelta(
+  //               OLD_S3A_SERVER_SIDE_ENCRYPTION_KEY,
+  //               SERVER_SIDE_ENCRYPTION_KEY)
+  //       });
+  //   Configuration.reloadExistingConfigurations();
+  // }
 
-  static {
-    addDeprecatedKeys();
-  }
+  // static {
+  //   addDeprecatedKeys();
+  // }
 
   /** Called after a new FileSystem instance is constructed.
    * @param name a uri whose authority section names the host, port, etc.
@@ -232,15 +232,17 @@ public class S3AFileSystem extends FileSystem {
 
       readAhead = longBytesOption(conf, READAHEAD_RANGE,
           DEFAULT_READAHEAD_RANGE, 0);
-      storageStatistics = (S3AStorageStatistics)
-          GlobalStorageStatistics.INSTANCE
-              .put(S3AStorageStatistics.NAME,
-                  new GlobalStorageStatistics.StorageStatisticsProvider() {
-                    @Override
-                    public StorageStatistics provide() {
-                      return new S3AStorageStatistics();
-                    }
-                  });
+      // storageStatistics = (S3AStorageStatistics)
+      //     GlobalStorageStatistics.INSTANCE
+      //         .put(S3AStorageStatistics.NAME,
+      //             new GlobalStorageStatistics.StorageStatisticsProvider() {
+      //               @Override
+      //               public StorageStatistics provide() {
+      //                 return new S3AStorageStatistics();
+      //               }
+      //             });
+      //
+      storageStatistics = new S3AStorageStatistics();
 
       int maxThreads = conf.getInt(MAX_THREADS, DEFAULT_MAX_THREADS);
       if (maxThreads < 2) {
@@ -1024,10 +1026,10 @@ public class S3AFileSystem extends FileSystem {
    * Get the storage statistics of this filesystem.
    * @return the storage statistics
    */
-  @Override
-  public S3AStorageStatistics getStorageStatistics() {
-    return storageStatistics;
-  }
+  // @Override
+  // public S3AStorageStatistics getStorageStatistics() {
+  //   return storageStatistics;
+  // }
 
   /**
    * Request object metadata; increments counters in the process.

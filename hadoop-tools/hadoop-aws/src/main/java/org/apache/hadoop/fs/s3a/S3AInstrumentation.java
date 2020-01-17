@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.fs.FileSystem.Statistics;
-import org.apache.hadoop.metrics2.MetricStringBuilder;
+// import org.apache.hadoop.metrics2.MetricStringBuilder;
 import org.apache.hadoop.metrics2.annotation.Metrics;
 import org.apache.hadoop.metrics2.lib.Interns;
 import org.apache.hadoop.metrics2.lib.MetricsRegistry;
@@ -88,8 +88,10 @@ public class S3AInstrumentation {
   private final MutableCounterLong numberOfFakeDirectoryDeletes;
   private final MutableCounterLong numberOfDirectoriesCreated;
   private final MutableCounterLong numberOfDirectoriesDeleted;
-  private final Map<String, MutableCounterLong> streamMetrics =
-      new HashMap<>(30);
+  // private final Map<String, MutableCounterLong> streamMetrics =
+  //     new HashMap<>(30);
+  private final MetricsRegistry streamMetrics =
+      new MetricsRegistry("S3AFileSystemStreams").setContext(CONTEXT);
 
   /** Instantiate this without caring whether or not S3Guard is enabled. */
   private final S3GuardInstrumentation s3GuardInstrumentation
@@ -201,10 +203,10 @@ public class S3AInstrumentation {
    * @return a new counter
    */
   protected final MutableCounterLong streamCounter(String name, String desc) {
-    MutableCounterLong counter = new MutableCounterLong(
-        Interns.info(name, desc), 0L);
-    streamMetrics.put(name, counter);
-    return counter;
+    // MutableCounterLong counter = new MutableCounterLong(
+    //     Interns.info(name, desc), 0L);
+    // return counter;
+    return streamMetrics.newCounter(name, desc, 0L);
   }
 
   /**
@@ -272,16 +274,17 @@ public class S3AInstrumentation {
       String separator,
       String suffix,
       boolean all) {
-    MetricStringBuilder metricBuilder = new MetricStringBuilder(null,
-        prefix,
-        separator, suffix);
-    registry.snapshot(metricBuilder, all);
-    for (Map.Entry<String, MutableCounterLong> entry:
-        streamMetrics.entrySet()) {
-      metricBuilder.tuple(entry.getKey(),
-          Long.toString(entry.getValue().value()));
-    }
-    return metricBuilder.toString();
+    return "{dump not implemented}";
+    // MetricStringBuilder metricBuilder = new MetricStringBuilder(null,
+    //     prefix,
+    //     separator, suffix);
+    // registry.snapshot(metricBuilder, all);
+    // for (Map.Entry<String, MutableCounterLong> entry:
+    //     streamMetrics.entrySet()) {
+    //   metricBuilder.tuple(entry.getKey(),
+    //       Long.toString(entry.getValue().value()));
+    // }
+    // return metricBuilder.toString();
   }
 
   /**

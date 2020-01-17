@@ -34,7 +34,7 @@ import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.s3native.S3xLoginHelper;
-import org.apache.hadoop.security.ProviderUtils;
+import s3a_vendored.org.apache.hadoop.security.ProviderUtils;
 
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;

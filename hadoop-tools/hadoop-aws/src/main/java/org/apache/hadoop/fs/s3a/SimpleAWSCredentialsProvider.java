@@ -25,7 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.security.ProviderUtils;
+import s3a_vendored.org.apache.hadoop.security.ProviderUtils;
 
 import java.io.IOException;
 
