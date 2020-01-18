@@ -8,6 +8,18 @@ and modified the hadoop-aws module so that it could compile with hadoop 2.7,
 and published this build to our own maven repo, for usage in our spark apps to
 write data to s3.
 
+**NOTE**: The developers of s3a strongly encourage using s3a with the same
+version of the aws-java-sdk that hadoop-aws was compiled and tested with.
+
+> Critical: Do not attempt to “drop in” a newer version of the AWS SDK than
+> that which the Hadoop version was built with Whatever problem you have,
+> changing the AWS SDK version will not fix things, only change the stack
+> traces you see.
+
+Source: <https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/troubleshooting_s3a.html#Introduction>
+
+As such, this build of hadoop-aws should be used with aws-java-sdk version **1.11.199**.
+
 
 # Brief steps
 
