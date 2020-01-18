@@ -24,8 +24,7 @@ As such, this build of hadoop-aws should be used with aws-java-sdk version **1.1
 # Brief steps
 
 * Change pom.xml to use hadoop-common 2.7.3
-
-* Compile Java with `mvn compile -DskipTests`, it will definitely have a lot of errors
+* Compile Java with `mvn compile`, it will definitely have a lot of errors
 * Fix errors with as little effort as possible. Usually by commenting out code,
   or inlining code that was added after hadoop 2.7 and is used by hadoop-aws.
 
@@ -33,10 +32,8 @@ As such, this build of hadoop-aws should be used with aws-java-sdk version **1.1
 
 Eventually when compilation succeeds, you can use some basic steps to validate that the s3a filesystem works.
 
-* install to your local maven cache: `mvn install`
-
+* install to your local maven cache: `mvn install -Dmaven.test.skip=true`
 * run a simple CLI test using the `hadoop` command line interface
-
 ```shell
 hadoop fs \
     -libjars "${HOME}/.m2/repository/amperity/hadoop-aws/3.0.1/hadoop-aws-3.0.1.jar,${HOME}/.m2/repository/com/amazonaws/aws-java-sdk-bundle/$VERSION/x.jar" \
