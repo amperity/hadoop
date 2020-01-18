@@ -50,3 +50,4 @@ hadoop fs \
   make sure the project includes **only one version** of hadoop-aws and
   aws-java-sdk JARs on the classpath. Check for duplicates with `lein deps
   :tree` and the lein-collisions plugin.
+* finally, deploy to s3://amperity-static-packages with `mvn deploy`.
