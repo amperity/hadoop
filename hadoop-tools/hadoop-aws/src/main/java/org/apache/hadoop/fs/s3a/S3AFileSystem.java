@@ -834,10 +834,10 @@ public class S3AFileSystem extends FileSystem {
     // If we have a MetadataStore, track deletions/creations.
     Collection<Path> srcPaths = null;
     List<PathMetadata> dstMetas = null;
-    // if (hasMetadataStore()) {
-    //   srcPaths = new HashSet<>(); // srcPaths need fast look up before put
-    //   dstMetas = new ArrayList<>();
-    // }
+    if (hasMetadataStore()) {
+      srcPaths = new HashSet<>(); // srcPaths need fast look up before put
+      dstMetas = new ArrayList<>();
+    }
     // TODO S3Guard HADOOP-13761: retries when source paths are not visible yet
     // TODO S3Guard: performance: mark destination dirs as authoritative
 
@@ -965,8 +965,7 @@ public class S3AFileSystem extends FileSystem {
    * @return true iff the FS has been instantiated with a metadata store
    */
   public boolean hasMetadataStore() {
-    // return !S3Guard.isNullMetadataStore(metadataStore);
-    return false;
+    return !S3Guard.isNullMetadataStore(metadataStore);
   }
 
   /**
