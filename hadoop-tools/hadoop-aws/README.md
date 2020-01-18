@@ -42,3 +42,11 @@ hadoop fs \
     -Dfs.s3a.secret.key=XXX \
     -fs s3a://amperity-test-storage/ -ls /
 ```
+* include dependency in a Clojure project.clj:
+```
+   [amperity/hadoop-aws "3.0.1"]
+   [com.amazonaws/aws-java-sdk-bundle "1.11.199"]
+```
+  make sure the project includes **only one version** of hadoop-aws and
+  aws-java-sdk JARs on the classpath. Check for duplicates with `lein deps
+  :tree` and the lein-collisions plugin.
